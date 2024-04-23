@@ -4,6 +4,37 @@
     margin-top: 10px;
   }
   ion-button {
-    margin: 0 5px; /* Margin između dugmadi */
+    margin: 0 5px; 
+  }
+  .calendar-container {
+    justify-content: center;
+    margin-top: 20px; 
+    display: flex;
+  }
+  
+  .header-container {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin: 20px
+  }
+  
+  .time-slots-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+    margin: 20px;
+  }
+  
+  .time-slot {
+    background-color: lightgray;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer; 
+    border-radius: 8px;
+  }
+  .time-slot.clicked {
+    background-color: #009933;
+    color: white; /* Promenimo boju teksta na belu da bude vidljiv na zelenom pozadini */
   }
   

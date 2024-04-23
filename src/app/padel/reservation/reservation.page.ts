@@ -11,5 +11,13 @@ export class ReservationPage implements OnInit {
 
   ngOnInit() {
   }
+  selectedTime: string | null = null;
+  selectTime(time: string) {
+    this.selectedTime = time;
+    console.log('Izabrano vreme:', time);
+  }
 
+  isSelected(time: string): boolean {
+    return this.selectedTime === time;
+  }
 }

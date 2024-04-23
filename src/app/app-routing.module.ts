@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'padel',
     pathMatch: 'full'
   },
+  {
+    path: 'log-in',
+    loadChildren: () => import('./auth/log-in/log-in.module').then( m => m.LogInPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
+  },
  
 ];
 
