@@ -20,4 +20,28 @@ export class ReservationPage implements OnInit {
   isSelected(time: string): boolean {
     return this.selectedTime === time;
   }
+  openAlert(){
+    console.log('Termin je uspešno rezervisan!');
+  }
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        console.log('Alert confirmed');
+      },
+    },
+  ];
+
+  setResult() {
+    console.log('Potvrda');
+  }
 }

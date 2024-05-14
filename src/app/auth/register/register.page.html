@@ -29,10 +29,27 @@
             <ion-label position="floating">Email</ion-label>
             <ion-input type="email" formControlName="email"></ion-input>
           </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        <ion-col>
+          <p>Should be a valid email adress.</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
           <ion-item>
             <ion-label position="floating">Lozinka</ion-label>
             <ion-input type="password" formControlName="password"></ion-input>
           </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        <ion-col>
+          <p>Should be a valid passwsord.</p>
         </ion-col>
       </ion-row>
   

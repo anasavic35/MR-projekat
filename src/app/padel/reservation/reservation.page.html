@@ -33,7 +33,13 @@
   </div>
 
   <div class="button-container">
-    <ion-button routerLink="/reservation/reservation-booking">Rezervišite termin</ion-button>
+    <ion-button id="present-alert">Rezervišite termin</ion-button>
+    <ion-alert
+  trigger="present-alert"
+  header="Uspešno ste rezervisali termin!"
+  [buttons]="alertButtons"
+  (didDismiss)="setResult()"
+></ion-alert>
   </div>
 
 

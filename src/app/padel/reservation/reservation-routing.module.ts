@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: ReservationPage
+  },  {
+    path: 'field',
+    loadChildren: () => import('./field/field.module').then( m => m.FieldPageModule)
   }
+
 ];
 
 @NgModule({

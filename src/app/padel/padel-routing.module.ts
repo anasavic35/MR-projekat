@@ -27,7 +27,11 @@ const routes: Routes = [
     path: '',
     redirectTo: '/padel/tabs/home',
     pathMatch: 'full'
+  },  {
+    path: 'field',
+    loadChildren: () => import('./field/field.module').then( m => m.FieldPageModule)
   },
+
 
 ];
 
