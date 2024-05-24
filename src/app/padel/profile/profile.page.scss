@@ -1,0 +1,17 @@
+.profile-picture-container {
+  position: relative;
+  display: inline-block;
+  max-width: 280px; 
+  border-radius: 50%; 
+}
+
+.add-button {
+  position: absolute;
+  bottom: 10%;
+  right: 30%;
+  transform: translate(50%, -50%);
+  z-index: 0.5; 
+  background-color: transparent; 
+  color: white; 
+  --border-radius: 50%;
+}

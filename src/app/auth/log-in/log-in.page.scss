@@ -1,3 +1,32 @@
-ion-item.ion-valid{
-    --highlight-color-valid: var(--ion-color-primary)
-}
+.login-content {
+    --ion-background-color: #f2f2f2; 
+  }
+  
+  .login-container {
+    background-color: #42d77d;
+    border-bottom-left-radius: 45px; 
+    border-bottom-right-radius: 45px;
+    padding: 40px; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+  }
+  
+  .login-container img {
+    width: 250px; 
+    height: 250px;  
+    border-bottom-left-radius: 25px; 
+    border-bottom-right-radius: 25px;
+    margin-bottom: -15px; 
+  }
+  .form-container {
+    margin-top: 80px; 
+  }
+  .padel-info {
+    font-weight: bold; 
+    color: white; 
+    font-size: 23px; 
+  }
+  .padel-p{
+    color: white; 
+    font-size: 15px;   
+  }

@@ -1,10 +1,11 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
+  <div class="register-container">
+    <p class="register-info">Šta je padel?</p>
+    <p class="padel-pp">Padel je najbrže rastući sport u svetu. Registruj se i zakaži svoj prvi termin!</p>
+    <img src="assets/padelGirl.png" alt="Padel girl">
+  </div>
+  <div class="form-container">
   <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
     <ion-grid>
       <ion-row>
@@ -14,7 +15,9 @@
             <ion-input type="text" formControlName="name"></ion-input>
           </ion-item>
         </ion-col>
-  
+      </ion-row>
+
+      <ion-row>
         <ion-col>
           <ion-item>
             <ion-label position="floating">Prezime</ion-label>
@@ -63,7 +66,7 @@
     </ion-grid>
 
   </form>
-  
+</div>
 
 
 
