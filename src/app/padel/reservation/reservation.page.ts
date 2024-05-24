@@ -1,16 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FieldModel } from './field/field.model';
+import { FieldService } from './field/field.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.page.html',
   styleUrls: ['./reservation.page.scss'],
 })
-export class ReservationPage implements OnInit {
+export class ReservationPage implements OnInit, OnDestroy {
+  
 
-  constructor() { }
+  constructor(private fieldService:FieldService) { }
+  
+  fields: FieldModel[] = [];
+  private fieldSub: Subscription | undefined;
 
   ngOnInit() {
+   this.fieldSub=this.fieldService.fields.subscribe((fields:FieldModel[])=>{
+  // console.log(fieldData);
+      
+   this.fields=fields;
+    });
   }
+
+  ionViewWillEnter(){
+    this.fieldService.getFields().subscribe((fields:FieldModel[])=>{
+      //  console.log(fieldData);
+        
+      //  this.fields=fields;
+
+  });
+   }
+/*
+  fields: FieldModel[] = [
+    { id: 1, name: 'Teren 1' },
+    { id: 2, name: 'Teren 2' },
+    { id: 3, name: 'Teren 3' },
+    { id: 4, name: 'Teren 4' }
+  ];
+*/
+
+
+
   selectedTime: string | null = null;
   selectTime(time: string) {
     this.selectedTime = time;
@@ -43,5 +75,12 @@ export class ReservationPage implements OnInit {
 
   setResult() {
     console.log('Potvrda');
+  }
+
+  ngOnDestroy(){
+    if(this.fieldSub){
+      this.fieldSub.unsubscribe();
+    }
+
   }
 }

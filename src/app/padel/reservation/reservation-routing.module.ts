@@ -7,11 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: ReservationPage
-  },  {
-    path: 'field',
-    loadChildren: () => import('./field/field.module').then( m => m.FieldPageModule)
+  },
+  {
+    path: 'field/:id',
+    component: ReservationPage
   }
-
 ];
 
 @NgModule({

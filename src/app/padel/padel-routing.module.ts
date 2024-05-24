@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('./reservation/reservation.module').then( m => m.ReservationPageModule)
       },
       {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+      },
+      {
         path: '',
         redirectTo: '/padel/tabs/home',
         pathMatch: 'full'
@@ -27,10 +31,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/padel/tabs/home',
     pathMatch: 'full'
-  },  {
-    path: 'field',
-    loadChildren: () => import('./field/field.module').then( m => m.FieldPageModule)
   },
+ 
+
+
 
 
 ];

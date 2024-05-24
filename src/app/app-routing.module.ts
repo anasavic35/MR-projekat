@@ -19,14 +19,8 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
   },
-  {
-    path: 'field',
-    loadChildren: () => import('./field/field.module').then( m => m.FieldPageModule)
-  },
-  {
-    path: 'field',
-    loadChildren: () => import('./reservation/field/field.module').then( m => m.FieldPageModule)
-  },
+
+
  
 ];
 

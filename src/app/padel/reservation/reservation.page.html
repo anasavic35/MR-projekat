@@ -9,10 +9,11 @@
 
 <ion-content [fullscreen]="true">
   <div class="button-container">
-    <ion-button routerLink="/reservation/field/1">Teren 1</ion-button>
-    <ion-button routerLink="/reservation/field/2">Teren 2</ion-button>
-    <ion-button routerLink="/reservation/field/3">Teren 3</ion-button>
-    <ion-button routerLink="/reservation/field/4">Teren 4</ion-button>
+    <ion-button *ngFor="let field of fields" [routerLink]="['/padel/tabs/reservation/field', field.id]">
+      {{ field.name }}
+  </ion-button>
+
+
   </div>
   <div class="calendar-container">
     <ion-datetime presentation="date"></ion-datetime>
