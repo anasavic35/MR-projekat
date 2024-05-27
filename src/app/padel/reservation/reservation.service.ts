@@ -98,7 +98,7 @@ export class ReservationService {
               if (reservationData.hasOwnProperty(key) && reservationData[key].userId === userId) {
                 reservations.push(new ReservationModel(
                   key,
-                  reservationData[key].fieldId,
+                  reservationData[key].field,
                   reservationData[key].date,
                   reservationData[key].time,
                   reservationData[key].userId
@@ -116,7 +116,9 @@ export class ReservationService {
   
   
   
-  
+  cancelReservation(reservationId: string): Observable<any> {
+    return this.http.delete(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${reservationId}.json`);
+  }
   
   
   

@@ -57,9 +57,11 @@
               <ion-card-subtitle>{{ reservation.field.name}}</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              Molimo vas da ukoliko ste sprečeni da nam javite 24h pre zakazanog termina.
               Ponesite osmeh na lice i dobar vajb.
             </ion-card-content>
+            <ion-footer>
+              <ion-button (click)="cancelReservation(reservation)">Otkaži termin</ion-button>
+            </ion-footer>
           </ion-card>
         </div>
       </ion-col>
