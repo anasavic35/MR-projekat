@@ -113,7 +113,7 @@ isSelected(time: string): boolean {
       this.reservationService.addReservation(this.selectedFieldId, this.selectedDate, this.selectedTime).subscribe(() => {
         console.log('Uspešno ste rezervisali termin!');
         this.setResult();
-      }, err => {
+      }, (err: any) => {
         console.error('Greška pri rezervaciji: ', err);
       });
     } else {
