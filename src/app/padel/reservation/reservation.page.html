@@ -13,7 +13,7 @@
     <ion-row>
       <ion-col size="12">
         <div class="button-container">
-          <ion-button *ngFor="let field of fields" [routerLink]="['/padel/tabs/reservation/field', field.id]">
+          <ion-button *ngFor="let field of fields" (click)="selectField(field.id)" [class.selected]="selectedFieldId === field.id">
             {{ field.name }}
           </ion-button>
         </div>
@@ -24,7 +24,7 @@
     <ion-row>
       <ion-col size="12">
         <div class="calendar-container">
-          <ion-datetime presentation="date"></ion-datetime>
+          <ion-datetime (ionChange)="selectDate($event)" presentation="date"></ion-datetime>
         </div>
       </ion-col>
     </ion-row>
@@ -39,31 +39,26 @@
     </ion-row>
 
     <!-- Četvrti red -->
-<ion-row>
-  <ion-col size="12">
-    <div class="time-slots-container">
-      <div class="time-slot" (click)="selectTime('08:00 - 09:00')" [class.clicked]="isSelected('08:00 - 09:00')">08:00 - 09:00</div>
-      <div class="time-slot" (click)="selectTime('09:00 - 10:00')" [class.clicked]="isSelected('09:00 - 10:00')">09:00 - 10:00</div>
-      <div class="time-slot" (click)="selectTime('10:00 - 11:00')" [class.clicked]="isSelected('10:00 - 11:00')">10:00 - 11:00</div>
-      <div class="time-slot" (click)="selectTime('11:00 - 12:00')" [class.clicked]="isSelected('11:00 - 12:00')">11:00 - 12:00</div>
-      <div class="time-slot" (click)="selectTime('12:00 - 13:00')" [class.clicked]="isSelected('12:00 - 13:00')">12:00 - 13:00</div>
-      <div class="time-slot" (click)="selectTime('13:00 - 14:00')" [class.clicked]="isSelected('13:00 - 14:00')">13:00 - 14:00</div>
-      <div class="time-slot" (click)="selectTime('14:00 - 15:00')" [class.clicked]="isSelected('14:00 - 15:00')">14:00 - 15:00</div>
-      <div class="time-slot" (click)="selectTime('15:00 - 16:00')" [class.clicked]="isSelected('15:00 - 16:00')">15:00 - 16:00</div>
-    </div>
-  </ion-col>
-</ion-row>
-
+    <ion-row>
+      <ion-col size="12">
+        <div class="time-slots-container">
+          <div class="time-slot" *ngFor="let time of ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00', '12:00 - 13:00', '13:00 - 14:00', '14:00 - 15:00', '15:00 - 16:00']"
+               (click)="selectTime(time)"
+               [class.clicked]="isSelected(time)">
+            {{ time }}
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
 
     <!-- Peti red -->
     <ion-row>
       <ion-col size="12">
         <div class="button-container">
-          <ion-button id="present-alert">Rezervišite termin</ion-button>
+          <ion-button (click)="reserve()">Rezervišite termin</ion-button>
           <ion-alert
-            trigger="present-alert"
             header="Uspešno ste rezervisali termin!"
-            [buttons]="alertButtons"
+            [buttons]="['OK']"
             (didDismiss)="setResult()"
           ></ion-alert>
         </div>

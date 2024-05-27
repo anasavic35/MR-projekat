@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FieldModel } from './field/field.model';
 import { FieldService } from './field/field.service';
 import { Subscription } from 'rxjs';
+import { ReservationService } from './reservation.service';
+import { ReservationModel } from './reservation.model';
 
 @Component({
   selector: 'app-reservation',
@@ -9,11 +11,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./reservation.page.scss'],
 })
 export class ReservationPage implements OnInit, OnDestroy {
+  fields: FieldModel[] = [];
+  selectedFieldId!: string;
+  selectedDate!: Date;
+  selectedTime: string | undefined;
+
+  constructor(private fieldService:FieldService, private reservationService: ReservationService) { }
   
 
-  constructor(private fieldService:FieldService) { }
-  
-  fields: FieldModel[] = [];
   private fieldSub: Subscription | undefined;
 
   ngOnInit() {
@@ -42,7 +47,7 @@ export class ReservationPage implements OnInit, OnDestroy {
 */
 
 
-
+/*
   selectedTime: string | null = null;
   selectTime(time: string) {
     this.selectedTime = time;
@@ -55,6 +60,23 @@ export class ReservationPage implements OnInit, OnDestroy {
   openAlert(){
     console.log('Termin je uspešno rezervisan!');
   }
+*/
+
+selectField(fieldId: string) {
+  this.selectedFieldId = fieldId;
+}
+
+selectDate(event: any) {
+  this.selectedDate = new Date(event.detail.value);
+}
+
+selectTime(time: string) {
+  this.selectedTime = time;
+}
+
+isSelected(time: string): boolean {
+  return this.selectedTime === time;
+}
 
   public alertButtons = [
     {
@@ -83,4 +105,29 @@ export class ReservationPage implements OnInit, OnDestroy {
     }
 
   }
+
+
+
+  reserve() {
+    if (this.selectedFieldId && this.selectedDate && this.selectedTime) {
+      this.reservationService.addReservation(this.selectedFieldId, this.selectedDate, this.selectedTime).subscribe(() => {
+        console.log('Uspešno ste rezervisali termin!');
+        this.setResult();
+      }, err => {
+        console.error('Greška pri rezervaciji: ', err);
+      });
+    } else {
+      console.error('Morate popuniti sve podatke!');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
 }

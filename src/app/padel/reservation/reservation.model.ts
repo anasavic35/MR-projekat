@@ -1,6 +1,7 @@
 export interface ReservationModel {
-  fieldId: number;
+  fieldId: string;
   date: Date;
   time: string;
-  userId: number;
+  id:string
+  //userId: number;
 }

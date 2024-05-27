@@ -35,6 +35,17 @@
   }
   .time-slot.clicked {
     background-color: #009933;
-    color: white; /* Promenimo boju teksta na belu da bude vidljiv na zelenom pozadini */
+    color: white; 
   }
+
+
+ion-button {
+  --background: var(--ion-color-tertiary);
+}
+
+
+ion-button.selected {
+  --background: var(--ion-color-primary);
+}
+
   
