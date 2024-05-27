@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ReservationService } from './reservation.service';
 import { ReservationModel } from './reservation.model';
 
+
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.page.html',
@@ -12,7 +13,7 @@ import { ReservationModel } from './reservation.model';
 })
 export class ReservationPage implements OnInit, OnDestroy {
   fields: FieldModel[] = [];
-  selectedFieldId!: string;
+  selectedFieldId!: FieldModel;
   selectedDate!: Date;
   selectedTime: string | undefined;
 
@@ -62,8 +63,8 @@ export class ReservationPage implements OnInit, OnDestroy {
   }
 */
 
-selectField(fieldId: string) {
-  this.selectedFieldId = fieldId;
+selectField(field: FieldModel) {
+  this.selectedFieldId = field;
 }
 
 selectDate(event: any) {
@@ -121,6 +122,8 @@ isSelected(time: string): boolean {
     }
   }
 
+
+  
 
 
 

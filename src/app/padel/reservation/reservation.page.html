@@ -13,7 +13,7 @@
     <ion-row>
       <ion-col size="12">
         <div class="button-container">
-          <ion-button *ngFor="let field of fields" (click)="selectField(field.id)" [class.selected]="selectedFieldId === field.id">
+          <ion-button *ngFor="let field of fields" (click)="selectField(field)" [class.selected]="selectedFieldId === field">
             {{ field.name }}
           </ion-button>
         </div>

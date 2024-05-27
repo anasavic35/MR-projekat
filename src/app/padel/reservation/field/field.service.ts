@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FieldModel } from './field.model';
 import { map, tap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 interface FieldDate{
   id: number;
 name: string;
@@ -26,6 +26,11 @@ export class FieldService {
   get fields(){
     return this._fields.asObservable();
   }
+
+/*
+  getFieldById(fieldId: string): Observable<FieldModel> {
+    return this.http.get<FieldModel>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/field.json/${fieldId}`);
+  }*/
 
   getFields(){
     return this.http.get<{[key:string]:FieldModel}>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/field.json`).

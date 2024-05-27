@@ -6,10 +6,12 @@
   userId: string;
 }*/
 
+import { FieldModel } from "./field/field.model";
+
 export class ReservationModel {
 
 
-  constructor(public id:string, public fieldId :string,public date:Date, public time:string, public userId: string | null){
+  constructor(public id:string, public field :FieldModel,public date:Date, public time:string, public userId: string | null){
 
   }
 
