@@ -4,6 +4,9 @@ import { FieldService } from './field/field.service';
 import { Subscription } from 'rxjs';
 import { ReservationService } from './reservation.service';
 import { ReservationModel } from './reservation.model';
+import { AlertController } from '@ionic/angular';
+import { TimeService } from './time/time.service'; 
+import { TimeModel } from './time/time.model';
 
 
 @Component({
@@ -15,12 +18,15 @@ export class ReservationPage implements OnInit, OnDestroy {
   fields: FieldModel[] = [];
   selectedFieldId!: FieldModel;
   selectedDate!: Date;
-  selectedTime: string | undefined;
+  selectedTime!: TimeModel;
+  times: TimeModel[] = [];
 
-  constructor(private fieldService:FieldService, private reservationService: ReservationService) { }
+  constructor(private fieldService:FieldService, private reservationService: ReservationService, 
+    private alertController: AlertController, private timeService: TimeService) { }
   
 
   private fieldSub: Subscription | undefined;
+  private timeSub: Subscription | undefined;
 
   ngOnInit() {
    this.fieldSub=this.fieldService.fields.subscribe((fields:FieldModel[])=>{
@@ -28,14 +34,25 @@ export class ReservationPage implements OnInit, OnDestroy {
       
    this.fields=fields;
     });
-  }
+    this.timeSub=this.timeService.times.subscribe((times:TimeModel[])=>{
+      // console.log(fieldData);
+          
+       this.times=times;
+  })
+};
 
   ionViewWillEnter(){
     this.fieldService.getFields().subscribe((fields:FieldModel[])=>{
       //  console.log(fieldData);
         
       //  this.fields=fields;
+     
 
+  });
+
+  this.timeService.getTimes().subscribe((times: TimeModel[]) => {
+    //this.times = times.map(time => time.timeSlot);
+    
   });
    }
 /*
@@ -71,14 +88,22 @@ selectDate(event: any) {
   this.selectedDate = new Date(event.detail.value);
 }
 
-selectTime(time: string) {
+selectTime(time: TimeModel) {
   this.selectedTime = time;
 }
 
-isSelected(time: string): boolean {
+isSelected(time: TimeModel): boolean {
   return this.selectedTime === time;
 }
+async presentAlert() {
+  const alert = await this.alertController.create({
+    header: 'Uspešno ste zakazali termin!',
+    message: 'Vaš termin je uspešno zakazan.',
+    buttons: ['OK']
+  });
 
+  await alert.present();
+}
   public alertButtons = [
     {
       text: 'Cancel',
@@ -114,6 +139,7 @@ isSelected(time: string): boolean {
       this.reservationService.addReservation(this.selectedFieldId, this.selectedDate, this.selectedTime).subscribe(() => {
         console.log('Uspešno ste rezervisali termin!');
         this.setResult();
+        this.presentAlert();
       }, (err: any) => {
         console.error('Greška pri rezervaciji: ', err);
       });

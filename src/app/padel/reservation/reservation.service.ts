@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, map, switchMap, take, tap } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Time } from '@angular/common';
 import { FieldModel } from './field/field.model';
+import { TimeModel } from './time/time.model';
 
 interface ReservationData{
   field:FieldModel,
@@ -38,7 +39,7 @@ export class ReservationService {
   }
 
 
-  addReservation(field: FieldModel, date: Date, time:string){
+  addReservation(field: FieldModel, date: Date, time:TimeModel){
     let generatedId: string;
     let newReservation:ReservationModel;
     return this.authService.userId.pipe(take(1),switchMap(userId=>{
