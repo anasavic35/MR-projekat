@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { PadelPageRoutingModule } from './padel-routing.module';
 
 import { PadelPage } from './padel.page';
+import { ReservationModalComponent } from './reservation/reservation-modal/reservation-modal.component';
+
+
 
 @NgModule({
   imports: [
@@ -15,6 +18,6 @@ import { PadelPage } from './padel.page';
     IonicModule,
     PadelPageRoutingModule
   ],
-  declarations: [PadelPage]
+  declarations: [PadelPage, ReservationModalComponent,]
 })
 export class PadelPageModule {}

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservationModel } from '../reservation/reservation.model';
 import { ReservationService } from '../reservation/reservation.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { ReservationModalComponent } from '../reservation/reservation-modal/reservation-modal.component';
 
 
 
@@ -14,7 +15,7 @@ export class HomePage implements OnInit {
 
   reservations: ReservationModel[] = [];
 
-  constructor(private reservationService: ReservationService, private alertController: AlertController) { }
+  constructor(private reservationService: ReservationService, private alertController: AlertController, private modalCtrl: ModalController  ) { }
 
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -49,5 +50,14 @@ export class HomePage implements OnInit {
     });
   }
 
+  async openModal(reservation: ReservationModel) {
+    const modal = await this.modalCtrl.create({
+      component: ReservationModalComponent,
+      componentProps: {
+        reservationData: reservation 
+      }
+    });
+    return await modal.present();
+  }
   
 }
