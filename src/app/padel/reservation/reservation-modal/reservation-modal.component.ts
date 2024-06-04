@@ -41,53 +41,11 @@ export class ReservationModalComponent  implements OnInit {
       console.log(comments);
        this.comments=comments;
         });
-
-
   }
 
   ionViewWillEnter(){
-   /* this.commentService.getCommentsForReservation(this.reservationData).subscribe((comments:CommentModel[])=>{
-      
-     
+          }
 
-  });*/
-}
-/*
-  addComment() {
-    if (!this.newComment.trim()) {
-      console.error('Morate uneti tekst komentara!');
-      return;
-    }
-
-    const reservation = this.reservationData.id;
-    const text = this.newComment;
-
-    this.commentService.addComment(reservation, text).subscribe(() => {
-      console.log('Uspešno dodat komentar!');
-      this.newComment = '';
-    }, (error) => {
-      console.error('Greška prilikom dodavanja komentara:', error);
-    });
-  }
-  addComment() {
-    if (!this.newComment.trim()) {
-      console.error('Morate uneti tekst komentara!');
-      return;
-    }
-
-    const reservationId = this.reservationData.id;
-    const text = this.newComment;
-
-    this.commentService.addComment(reservationId, text).subscribe(() => {
-      console.log('Uspešno dodat komentar!');
-      this.newComment = ''; // Očisti unos
-      this.commentService.getCommentsForReservation(this.reservationData.id).subscribe(comments => {
-        this.comments = comments;
-      });
-    }, (error) => {
-      console.error('Greška prilikom dodavanja komentara:', error);
-    });
-  }*/
   async addComment() {
     if (!this.newComment.trim()) {
       console.error('Morate uneti tekst komentara!');
@@ -124,3 +82,41 @@ export class ReservationModalComponent  implements OnInit {
   
 
 }
+
+
+/*
+  addComment() {
+    if (!this.newComment.trim()) {
+      console.error('Morate uneti tekst komentara!');
+      return;
+    }
+
+    const reservation = this.reservationData.id;
+    const text = this.newComment;
+
+    this.commentService.addComment(reservation, text).subscribe(() => {
+      console.log('Uspešno dodat komentar!');
+      this.newComment = '';
+    }, (error) => {
+      console.error('Greška prilikom dodavanja komentara:', error);
+    });
+  }
+  addComment() {
+    if (!this.newComment.trim()) {
+      console.error('Morate uneti tekst komentara!');
+      return;
+    }
+
+    const reservationId = this.reservationData.id;
+    const text = this.newComment;
+
+    this.commentService.addComment(reservationId, text).subscribe(() => {
+      console.log('Uspešno dodat komentar!');
+      this.newComment = ''; // Očisti unos
+      this.commentService.getCommentsForReservation(this.reservationData.id).subscribe(comments => {
+        this.comments = comments;
+      });
+    }, (error) => {
+      console.error('Greška prilikom dodavanja komentara:', error);
+    });
+  }*/

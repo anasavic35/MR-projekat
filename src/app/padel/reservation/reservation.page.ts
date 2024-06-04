@@ -20,6 +20,9 @@ export class ReservationPage implements OnInit, OnDestroy {
   selectedDate!: Date;
   selectedTime!: TimeModel;
   times: TimeModel[] = [];
+  reservedTimes: string[] = [];
+  
+
 
   constructor(private fieldService:FieldService, private reservationService: ReservationService, 
     private alertController: AlertController, private timeService: TimeService) { }
@@ -82,10 +85,12 @@ export class ReservationPage implements OnInit, OnDestroy {
 
 selectField(field: FieldModel) {
   this.selectedFieldId = field;
+  this.checkAvailability();
 }
 
 selectDate(event: any) {
   this.selectedDate = new Date(event.detail.value);
+  this.checkAvailability();
 }
 
 selectTime(time: TimeModel) {
@@ -149,9 +154,20 @@ async presentAlert() {
   }
 
 
+  checkAvailability() {
+    if (this.selectedFieldId && this.selectedDate) {
+      this.reservationService.getReservationsForFieldAndDate(this.selectedFieldId, this.selectedDate).subscribe(reservations => {
+        this.reservedTimes = reservations.map(reservation => reservation.time.timeSlot);
+      });
+    }
+  }
   
 
+  isReserved(time: TimeModel): boolean {
+    return this.reservedTimes.includes(time.timeSlot);
+  }
 
+ 
 
 
 

@@ -43,8 +43,9 @@
       <ion-col size="12">
         <div class="time-slots-container">
           <div class="time-slot" *ngFor="let time of times"
-          (click)="selectTime(time)"
-          [class.clicked]="isSelected(time)">
+          (click)="!isReserved(time) && selectTime(time)"
+               [class.reserved]="isReserved(time)"
+               [class.clicked]="isSelected(time)">
           {{ time.timeSlot }}
      </div>
         </div>

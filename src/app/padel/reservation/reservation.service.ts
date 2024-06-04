@@ -29,9 +29,6 @@ export class ReservationService {
     private http:HttpClient,private authService: AuthService
   ) { }
 
-  /*addReservation(reservation: ReservationModel) {
-    return this.reservationCollection.add(reservation);
-  }*/
 
   private _reservation=new BehaviorSubject<ReservationModel[]>([]);
 
@@ -40,56 +37,6 @@ export class ReservationService {
     return this._reservation.asObservable();
   }
 
-/*
-  addReservation(field: FieldModel, date: Date, time:TimeModel){
-    let generatedId: string;
-    let newReservation:ReservationModel;
-    return this.authService.userId.pipe(take(1),switchMap(userId=>{
-      newReservation=new ReservationModel('', field, date,time, userId);
-
-      return this.http.post<{ name: string }>(
-        `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth=${this.authService}`, newReservation);
-      }),
-      take(1),
-      switchMap((resData) => {
-        generatedId = resData.name;
-        return this._reservation;
-      }),
-      take(1),
-      tap((reservations) => {
-      
-        newReservation.id=generatedId;
-        reservations.push(newReservation);
-        this._reservation.next(reservations);
-      })
-
-    )
-  }*/
-  /*
- 
-  getReservations() {
-    return this.http.get<{[key: string]: ReservationData}>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth`)
-      .pipe(map((ReservationData: any) => {
-        console.log(ReservationData);
-        const reservations: ReservationModel[] = [];
-        for(const key in ReservationData) {
-          if(ReservationData.hasOwnProperty(key)){
-            reservations.push(new ReservationModel(key, ReservationData[key].fieldId,
-              ReservationData[key].date, ReservationData[key].time, ReservationData[key].userId, 
-             )
-  
-            );
-
-          }
-          
-        }
-        return reservations;
-      }),
-        tap((quotes) => {
-          this._reservation.next(quotes);
-        }));
-  }
-  */
 
   getReservations() {
     return this.authService.userId.pipe(
@@ -157,10 +104,99 @@ export class ReservationService {
     );
   }
 
-  
+
+  getReservationsForFieldAndDate(field: FieldModel, date: Date): Observable<ReservationModel[]> {
+    return this.http.get<{ [key: string]: ReservationData }>(
+      `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth=${this.authService}`
+    ).pipe(
+      map((reservationData: any) => {
+        const reservations: ReservationModel[] = [];
+        for (const key in reservationData) {
+          if (reservationData.hasOwnProperty(key)) {
+            const reservation = reservationData[key];
+            if (reservation.field.id === field.id && new Date(reservation.date).toDateString() === date.toDateString()) {
+              reservations.push(new ReservationModel(
+                key,
+                reservation.field,
+                reservation.date,
+                reservation.time,
+                reservation.userId,
+                reservation.comments || []
+              ));
+            }
+          }
+        }
+        return reservations;
+      })
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 }
+
+
+
+/*
+  addReservation(field: FieldModel, date: Date, time:TimeModel){
+    let generatedId: string;
+    let newReservation:ReservationModel;
+    return this.authService.userId.pipe(take(1),switchMap(userId=>{
+      newReservation=new ReservationModel('', field, date,time, userId);
+
+      return this.http.post<{ name: string }>(
+        `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth=${this.authService}`, newReservation);
+      }),
+      take(1),
+      switchMap((resData) => {
+        generatedId = resData.name;
+        return this._reservation;
+      }),
+      take(1),
+      tap((reservations) => {
+      
+        newReservation.id=generatedId;
+        reservations.push(newReservation);
+        this._reservation.next(reservations);
+      })
+
+    )
+  }*/
+  /*
+ 
+  getReservations() {
+    return this.http.get<{[key: string]: ReservationData}>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth`)
+      .pipe(map((ReservationData: any) => {
+        console.log(ReservationData);
+        const reservations: ReservationModel[] = [];
+        for(const key in ReservationData) {
+          if(ReservationData.hasOwnProperty(key)){
+            reservations.push(new ReservationModel(key, ReservationData[key].fieldId,
+              ReservationData[key].date, ReservationData[key].time, ReservationData[key].userId, 
+             )
+  
+            );
+
+          }
+          
+        }
+        return reservations;
+      }),
+        tap((quotes) => {
+          this._reservation.next(quotes);
+        }));
+  }
+  */

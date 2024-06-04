@@ -33,6 +33,10 @@
     cursor: pointer; 
     border-radius: 8px;
   }
+  .time-slot.reserved {
+    background-color: gray;
+    cursor: not-allowed;
+  }
   .time-slot.clicked {
     background-color: #009933;
     color: white; 
