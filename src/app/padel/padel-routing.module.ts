@@ -32,6 +32,11 @@ const routes: Routes = [
     redirectTo: '/padel/tabs/home',
     pathMatch: 'full'
   },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
+  },
+
  
 
 
