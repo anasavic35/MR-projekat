@@ -51,6 +51,7 @@ export class HomePage implements OnInit {
   }
 
   async openModal(reservation: ReservationModel) {
+    console.log(reservation)
     const modal = await this.modalCtrl.create({
       component: ReservationModalComponent,
       componentProps: {

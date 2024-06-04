@@ -7,12 +7,14 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Time } from '@angular/common';
 import { FieldModel } from './field/field.model';
 import { TimeModel } from './time/time.model';
+import { CommentModel } from './comment/comment.model';
 
 interface ReservationData{
   field:FieldModel,
   date:Date,
   time:string,
-  userId:string
+  userId:string,
+  comments: CommentModel[];
 }
 
 @Injectable({
@@ -38,7 +40,7 @@ export class ReservationService {
     return this._reservation.asObservable();
   }
 
-
+/*
   addReservation(field: FieldModel, date: Date, time:TimeModel){
     let generatedId: string;
     let newReservation:ReservationModel;
@@ -62,7 +64,7 @@ export class ReservationService {
       })
 
     )
-  }
+  }*/
   /*
  
   getReservations() {
@@ -102,7 +104,8 @@ export class ReservationService {
                   reservationData[key].field,
                   reservationData[key].date,
                   reservationData[key].time,
-                  reservationData[key].userId
+                  reservationData[key].userId,
+                  reservationData[key].comments || []
                 ));
               }
             }
@@ -122,7 +125,38 @@ export class ReservationService {
   }
   
   
-  
+  addReservation(field: FieldModel, date: Date, time: TimeModel) {
+    let generatedId: string;
+    let newReservation: ReservationModel;
+    return this.authService.userId.pipe(
+      take(1),
+      switchMap(userId => {
+        newReservation = new ReservationModel('', field, date, time, userId, []);
+        return this.http.post<{ name: string }>(
+          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth=${this.authService}`, 
+          { ...newReservation, id: null }
+        );
+      }),
+      switchMap((resData) => {
+        generatedId = resData.name;
+        newReservation.id = generatedId;
+        return this.http.put(
+          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${generatedId}.json?auth=${this.authService}`,
+          { ...newReservation, id: generatedId }
+        );
+      }),
+      switchMap(() => {
+        return this._reservation;
+      }),
+      take(1),
+      tap((reservations) => {
+        newReservation.id = generatedId;
+        reservations.push(newReservation);
+        this._reservation.next(reservations);
+      })
+    );
+  }
+
   
 
 
