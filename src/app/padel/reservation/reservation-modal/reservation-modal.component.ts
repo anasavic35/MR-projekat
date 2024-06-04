@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {ModalController} from "@ionic/angular";
+import {AlertController, ModalController} from "@ionic/angular";
 import { ReservationModel } from '../reservation.model';
 import { ReservationPage } from '../reservation.page';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -26,7 +26,8 @@ export class ReservationModalComponent  implements OnInit {
   constructor(private modalCtrl: ModalController, private reservationPage: ReservationPage,
     private authService: AuthService, 
     private commentService: CommentService,
-    private reservationService: ReservationService  
+    private reservationService: ReservationService ,
+    private alertController: AlertController,
   ) { }
 
   onCancel() {
@@ -87,9 +88,10 @@ export class ReservationModalComponent  implements OnInit {
       console.error('Greška prilikom dodavanja komentara:', error);
     });
   }*/
-  addComment() {
+  async addComment() {
     if (!this.newComment.trim()) {
       console.error('Morate uneti tekst komentara!');
+      await this.presentAlert('Morate uneti tekst komentara!');
       return;
     }
 
@@ -103,12 +105,22 @@ export class ReservationModalComponent  implements OnInit {
       this.commentService.getCommentsForReservation(reservation.id).subscribe(comments => {
         this.reservationData.comments = comments;
       });
+      this.presentAlert('Uspešno dodat komentar!');
     }, (error) => {
       console.error('Greška prilikom dodavanja komentara:', error);
     });
   }
 
 
+  async presentAlert(message: any) {
+    const alert = await this.alertController.create({
+      header: 'Obaveštenje',
+      message: message,
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
   
 
 }
