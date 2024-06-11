@@ -1,6 +1,7 @@
 export interface ProfileModel {
-    name:String,
-    surname:String,
-    email:String,
-    password:String,
+    profileId: string,
+    name:string,
+    surname:string,
+    email:string,
+    password:string,
 }

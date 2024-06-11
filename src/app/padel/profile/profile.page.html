@@ -26,22 +26,22 @@
       <ion-col size-md="6" offset-md="3">
         <ion-item>
           <ion-label position="stacked">Ime</ion-label>
-          <ion-input type="text" [(ngModel)]="profile.name"></ion-input>
+          <ion-input type="text" [(ngModel)]="profile.name"  [disabled]="!editMode"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Prezime</ion-label>
-          <ion-input type="text" [(ngModel)]="profile.surname"></ion-input>
+          <ion-input type="text" [(ngModel)]="profile.surname"  [disabled]="!editMode"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
-          <ion-input type="email" [(ngModel)]="profile.email"></ion-input>
+          <ion-input type="email" [(ngModel)]="profile.email" disabled></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Lozinka</ion-label>
-          <ion-input type="password" [(ngModel)]="profile.password"></ion-input>
+          <ion-input type="password" [(ngModel)]="profile.password" disabled></ion-input>
         </ion-item>
 
       </ion-col>
@@ -49,7 +49,7 @@
 
     <ion-row>
       <ion-col size-md="6" offset-md="3">
-        <ion-button expand="block" (click)="saveProfile()">Sacuvaj</ion-button>
+        <ion-button expand="block" (click)="saveProfile()" [hidden]="!editMode">Sacuvaj</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

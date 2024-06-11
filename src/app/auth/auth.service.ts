@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuth  } from '@angular/fire/compat/auth';
-import { BehaviorSubject, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, from, map, switchMap, tap } from 'rxjs';
 import { User } from './user.model';
 
 interface AuthResponseData{
@@ -20,6 +20,13 @@ interface UserData{
   email: string,
   password:  string,
 
+}
+export interface ProfileModel {
+  profileId: string;
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
 }
 
 @Injectable({
@@ -45,7 +52,7 @@ export class AuthService {
       
     );
   }
-
+/*
   register(user:UserData){
     this._isUserAuthenticated=true;
     return this.http.post<AuthResponseData>(
@@ -60,7 +67,52 @@ export class AuthService {
         })
        );
 
-  }
+  }*/
+  
+      
+       register(user: UserData): Observable<any> {
+        return from(
+          this.afAuth.createUserWithEmailAndPassword(user.email, user.password)
+        ).pipe(
+          tap((userCredential) => {
+            const firebaseUser = userCredential.user;
+            if (firebaseUser) {
+              const profileId = firebaseUser.uid;
+              return firebaseUser.getIdToken().then((idToken) => {
+                const expirationTime = new Date(
+                  new Date().getTime() + 3600 * 1000
+                );
+                const userProfile: ProfileModel = {
+                  profileId: profileId,
+                  name: user.name!,
+                  surname: user.surname!,
+                  email: user.email,
+                  password: user.password,
+                };
+                this._user.next(
+                  new User(profileId, user.email, idToken, expirationTime)
+                );
+                return this.http
+                  .put(
+                    `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/profiles/${profileId}.json`,
+                    userProfile
+                  )
+                  .toPromise()
+                  .then(() => console.log('User profile saved:', userProfile));
+              });
+            } else {
+              throw new Error('User registration failed');
+            }
+          })
+        );
+      }
+
+
+
+
+
+
+
 
   logIn(user:UserData){
     this._isUserAuthenticated=true;
@@ -82,12 +134,24 @@ export class AuthService {
   logIn(user: UserData): Promise<any> {
     return this.afAuth.signInWithEmailAndPassword(user.email, user.password);
   }*/
-
+/*
   logOut(){
     this._user.next(null);
 
-  }
+  }*/
 
+    logOut() {
+      return new Promise<void>((resolve, reject) => {
+        this.afAuth.signOut().then(() => {
+          this._user.next(null);
+          console.log("Uspesno odjavljen korisnik!");
+          resolve();
+        }).catch((error) => {
+          console.error("Greška prilikom odjavljivanja korisnika:", error);
+          reject(error);
+        });
+      });
+    }
   get userId(){
     return this._user.asObservable().pipe(
 
@@ -102,5 +166,12 @@ export class AuthService {
     );
 
   }
+
+  
+
+ 
+
+
+
 
 }
