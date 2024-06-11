@@ -24,7 +24,7 @@
     <ion-row>
       <ion-col size="12">
         <div class="calendar-container">
-          <ion-datetime (ionChange)="selectDate($event)" presentation="date"></ion-datetime>
+          <ion-datetime (ionChange)="selectDate($event)" presentation="date" [min]="minDate"></ion-datetime>
         </div>
       </ion-col>
     </ion-row>

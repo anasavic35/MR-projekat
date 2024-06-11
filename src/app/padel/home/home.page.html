@@ -53,7 +53,10 @@
         <div *ngFor="let reservation of reservations">
           <ion-card  (click)="openModal(reservation)">
             <ion-card-header>
-              <ion-card-title> {{ reservation.date | date }} {{ reservation.time.timeSlot }}</ion-card-title>
+              <ion-card-title> 
+                {{ reservation.date | date }} <br>
+                {{ reservation.time.timeSlot }}
+              </ion-card-title>
               <ion-card-subtitle>{{ reservation.field.name}}</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>

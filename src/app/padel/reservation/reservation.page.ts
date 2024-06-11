@@ -21,11 +21,15 @@ export class ReservationPage implements OnInit, OnDestroy {
   selectedTime!: TimeModel;
   times: TimeModel[] = [];
   reservedTimes: string[] = [];
+  minDate: string | undefined;
   
 
 
   constructor(private fieldService:FieldService, private reservationService: ReservationService, 
-    private alertController: AlertController, private timeService: TimeService) { }
+    private alertController: AlertController, private timeService: TimeService) {
+    const today = new Date();
+    this.minDate = today.toISOString();
+     }
   
 
   private fieldSub: Subscription | undefined;
@@ -33,55 +37,21 @@ export class ReservationPage implements OnInit, OnDestroy {
 
   ngOnInit() {
    this.fieldSub=this.fieldService.fields.subscribe((fields:FieldModel[])=>{
-  // console.log(fieldData);
       
    this.fields=fields;
     });
-    this.timeSub=this.timeService.times.subscribe((times:TimeModel[])=>{
-      // console.log(fieldData);
-          
+    this.timeSub=this.timeService.times.subscribe((times:TimeModel[])=>{ 
        this.times=times;
   })
 };
 
   ionViewWillEnter(){
     this.fieldService.getFields().subscribe((fields:FieldModel[])=>{
-      //  console.log(fieldData);
-        
-      //  this.fields=fields;
-     
-
   });
 
   this.timeService.getTimes().subscribe((times: TimeModel[]) => {
-    //this.times = times.map(time => time.timeSlot);
-    
   });
    }
-/*
-  fields: FieldModel[] = [
-    { id: 1, name: 'Teren 1' },
-    { id: 2, name: 'Teren 2' },
-    { id: 3, name: 'Teren 3' },
-    { id: 4, name: 'Teren 4' }
-  ];
-*/
-
-
-/*
-  selectedTime: string | null = null;
-  selectTime(time: string) {
-    this.selectedTime = time;
-    console.log('Izabrano vreme:', time);
-  }
-
-  isSelected(time: string): boolean {
-    return this.selectedTime === time;
-  }
-  openAlert(){
-    console.log('Termin je uspešno rezervisan!');
-  }
-*/
 
 selectField(field: FieldModel) {
   this.selectedFieldId = field;
@@ -166,13 +136,5 @@ async presentAlert() {
   isReserved(time: TimeModel): boolean {
     return this.reservedTimes.includes(time.timeSlot);
   }
-
- 
-
-
-
-
-
-
 
 }
