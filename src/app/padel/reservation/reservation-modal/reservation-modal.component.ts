@@ -58,8 +58,7 @@ export class ReservationModalComponent  implements OnInit {
 
     this.commentService.addComment(reservation, text).subscribe(() => {
       console.log('Uspešno dodat komentar!');
-      this.newComment = ''; // Očisti unos
-      // Dodaj novi komentar u reservationData.comments
+      this.newComment = ''; 
       this.commentService.getCommentsForReservation(reservation.id).subscribe(comments => {
         this.reservationData.comments = comments;
       });
@@ -84,39 +83,3 @@ export class ReservationModalComponent  implements OnInit {
 }
 
 
-/*
-  addComment() {
-    if (!this.newComment.trim()) {
-      console.error('Morate uneti tekst komentara!');
-      return;
-    }
-
-    const reservation = this.reservationData.id;
-    const text = this.newComment;
-
-    this.commentService.addComment(reservation, text).subscribe(() => {
-      console.log('Uspešno dodat komentar!');
-      this.newComment = '';
-    }, (error) => {
-      console.error('Greška prilikom dodavanja komentara:', error);
-    });
-  }
-  addComment() {
-    if (!this.newComment.trim()) {
-      console.error('Morate uneti tekst komentara!');
-      return;
-    }
-
-    const reservationId = this.reservationData.id;
-    const text = this.newComment;
-
-    this.commentService.addComment(reservationId, text).subscribe(() => {
-      console.log('Uspešno dodat komentar!');
-      this.newComment = ''; // Očisti unos
-      this.commentService.getCommentsForReservation(this.reservationData.id).subscribe(comments => {
-        this.comments = comments;
-      });
-    }, (error) => {
-      console.error('Greška prilikom dodavanja komentara:', error);
-    });
-  }*/

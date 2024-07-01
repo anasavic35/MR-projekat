@@ -11,14 +11,7 @@ name: string;
   providedIn: 'root'
 })
 export class FieldService {
-/*
-  fields: FieldModel[]=[
-    {id: 1, name: "Teren 1"},
-    {id: 2, name: "Teren 2"},
-    {id: 3, name: "Teren 3"},
-    {id: 4, name: "Teren 4"},
-    
-  ]*/
+
   private _fields=new BehaviorSubject<FieldModel[]>([]);
 
   constructor(private http:HttpClient) { }
@@ -27,10 +20,7 @@ export class FieldService {
     return this._fields.asObservable();
   }
 
-/*
-  getFieldById(fieldId: string): Observable<FieldModel> {
-    return this.http.get<FieldModel>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/field.json/${fieldId}`);
-  }*/
+
 
   getFields(){
     return this.http.get<{[key:string]:FieldModel}>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/field.json`).

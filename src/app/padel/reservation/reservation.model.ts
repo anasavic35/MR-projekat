@@ -1,10 +1,4 @@
-/*export interface ReservationModel {
-  fieldId: string;
-  date: Date;
-  time: string;
-  id:string
-  userId: string;
-}*/
+
 
 import { CommentModel } from "./comment/comment.model";
 import { FieldModel } from "./field/field.model";

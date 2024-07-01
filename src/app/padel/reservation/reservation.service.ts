@@ -41,7 +41,7 @@ export class ReservationService {
   getReservations() {
     return this.authService.userId.pipe(
       switchMap(userId => {
-        return this.http.get<{[key: string]: ReservationData}>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth`)
+        return this.http.get<{[key: string]: ReservationData}>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json`)
           .pipe(map((reservationData: any) => {
             const reservations: ReservationModel[] = [];
             for (const key in reservationData) {
@@ -80,7 +80,7 @@ export class ReservationService {
       switchMap(userId => {
         newReservation = new ReservationModel('', field, date, time, userId, []);
         return this.http.post<{ name: string }>(
-          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth=${this.authService}`, 
+          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?`, 
           { ...newReservation, id: null }
         );
       }),
@@ -88,7 +88,7 @@ export class ReservationService {
         generatedId = resData.name;
         newReservation.id = generatedId;
         return this.http.put(
-          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${generatedId}.json?auth=${this.authService}`,
+          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${generatedId}.json`,
           { ...newReservation, id: generatedId }
         );
       }),
@@ -107,7 +107,7 @@ export class ReservationService {
 
   getReservationsForFieldAndDate(field: FieldModel, date: Date): Observable<ReservationModel[]> {
     return this.http.get<{ [key: string]: ReservationData }>(
-      `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json?auth=${this.authService}`
+      `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation.json`
     ).pipe(
       map((reservationData: any) => {
         const reservations: ReservationModel[] = [];
@@ -130,21 +130,6 @@ export class ReservationService {
       })
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

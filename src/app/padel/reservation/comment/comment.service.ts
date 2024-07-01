@@ -35,7 +35,7 @@ export class CommentService {
       switchMap(userId => {
         newComment = new CommentModel('', text, reservation.id);
         return this.http.post<{ name: string }>(
-          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comments.json?auth=${this.authService}`, 
+          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comments.json`, 
           { ...newComment, id: null }
         );
       }),
@@ -43,12 +43,12 @@ export class CommentService {
         generatedId = resData.name;
         newComment.id = generatedId;
         return this.http.put(
-          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comments/${generatedId}.json?auth=${this.authService}`,
+          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comments/${generatedId}.json`,
           { ...newComment, id: generatedId }
         );
       }),
       switchMap(() => this.http.get<ReservationModel>(
-        `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${reservation.id}.json?auth=${this.authService}`
+        `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${reservation.id}.json`
       )),
       switchMap((updatedReservation) => {
         if (!updatedReservation.comments) {
@@ -56,7 +56,7 @@ export class CommentService {
         }
         updatedReservation.comments.push(newComment);
         return this.http.put(
-          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${reservation.id}.json?auth=${this.authService}`,
+          `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/reservation/${reservation.id}.json`,
           updatedReservation
         );
       }),
@@ -72,125 +72,9 @@ export class CommentService {
 
 
 
-
-/*
-
-  addComment(reservationID: string, text: string) {
-    let generatedId: string;
-    let newComment: CommentModel;
-    return this.authService.userId.pipe(
-        take(1),
-        switchMap(userId => {
-            newComment = new CommentModel('', text, reservationID);
-            return this.http.post<{ name: string }>(
-                `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comment.json?auth=${this.authService}`, 
-                { ...newComment, id: null }
-            );
-        }),
-        switchMap((resData) => {
-            generatedId = resData.name;
-            newComment.id = generatedId;
-            return this.http.put(
-                `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comment/${generatedId}.json?auth=${this.authService}`,
-                { ...newComment, id: generatedId }
-            );
-        }),
-        switchMap(() => {
-            return this._comment;
-        }),
-        take(1),
-        tap((comments) => {
-            comments.push(newComment);
-            this._comment.next(comments);
-        })
-    );
-}
-
-  
-/*
-
-getComment(reservation:ReservationModel) {
-  return this.http.get<{[key: string]: CommentData}>(`https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comment.json?auth`)
-    .pipe(
-      map((commentData: any) => {
-        const comments: CommentModel[] = [];
-        for (const key in commentData) {
-          if (commentData.hasOwnProperty(key) && commentData[key].reservation.id===reservation.id) {
-            console.log(commentData[key].reservation.id)
-            console.log(reservation.id)
-            console.log("isti")
-            comments.push(new CommentModel(
-              key,
-              commentData[key].text,
-              commentData[key].reservation,
-            ));
-          }
-        }
-        return comments;
-      }),
-      tap((comments) => {
-        this._comment.next(comments);
-      })
-    );
-}
-
-
-
-  getCommentsForReservation(reservation:ReservationModel) {
-    return this.http.get<{ [key: string]: CommentData }>(
-      `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comment.json?auth`
-    ).pipe(
-      map(commentData => {
-        const comments: CommentModel[] = [];
-        for (const key in commentData) {
-          if (commentData.hasOwnProperty(key) && commentData[key].reservation.id === reservation.id) {
-            comments.push(new CommentModel(
-              key,
-              commentData[key].text,
-              commentData[key].reservation
-            ));
-          }
-        }
-        return comments;
-      })
-    );
-  }
-
-
-
-
-}
-/*
-addComment(reservation: ReservationModel, text:string){
-    let generatedId: string;
-    let newComment:CommentModel;
-    return this.authService.userId.pipe(take(1),switchMap(userId=>{
-      newComment=new CommentModel('', text,reservation);
-
-      return this.http.post<{ name: string }>(
-        `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comment.json?auth=${this.authService}`, newComment);
-      }),
-      take(1),
-      switchMap((resData) => {
-        generatedId = resData.name;
-        newComment.id = generatedId; 
-        return this._comment;
-      }),
-      take(1),
-      tap((comments) => {
-      
-        newComment.id=generatedId;
-        comments.push(newComment);
-        this._comment.next(comments);
-      })
-
-    )
-    */
-
-
     getCommentsForReservation(reservationId: string): Observable<CommentModel[]> {
       return this.http.get<{[key: string]: CommentModel}>(
-        `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comments.json?auth`
+        `https://padel1-app-default-rtdb.europe-west1.firebasedatabase.app/comments.json`
       ).pipe(
         map(commentData => {
           const comments: CommentModel[] = [];

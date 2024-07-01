@@ -38,26 +38,6 @@ export class LogInPage implements OnInit {
 
 
   }
-  /*
-  onLogIn(logInForm: NgForm) {
-    this.isLoading = true;
-
-    if (logInForm.valid) {
-      const userData = {
-        email: logInForm.value.email,
-        password: logInForm.value.password
-      };
-
-      this.authService.logIn(userData).then(() => {
-        console.log("Uspesna prijava!");
-        this.isLoading = false;
-        this.router.navigateByUrl("/padel/tabs/home");
-      }).catch(error => {
-        console.log("Greška pri prijavi:", error);
-        this.isLoading = false;
-        
-      });
-    }
-  }*/
+  
 
 }
