@@ -27,12 +27,6 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  /*
-  ngOnInit(): void {
-    this.reservationService.getReservations().subscribe((reservations: ReservationModel[]) => {
-      this.reservations = reservations;
-    });
-  }*/
   ngOnInit(): void {
     this.loadReservations();
   }
@@ -59,6 +53,11 @@ export class HomePage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  onCancelButtonClick(event: Event, reservation: ReservationModel) {
+    event.stopPropagation();
+    this.cancelReservation(reservation);
   }
   
 }
