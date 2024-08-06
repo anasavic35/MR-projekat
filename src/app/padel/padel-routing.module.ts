@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/padel/tabs/home',
+    redirectTo: '/padel/welcome',
     pathMatch: 'full'
   },
   {

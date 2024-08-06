@@ -76,6 +76,10 @@
   --ion-color-light-tint: #f5f6f9;
   
 }
+ion-menu ion-icon {
+  color: var(--ion-color-tertiary); 
+}
+
 
 @media (prefers-color-scheme: dark) {
   /*

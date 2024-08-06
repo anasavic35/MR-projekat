@@ -119,7 +119,7 @@ async presentAlert() {
         console.error('Greška pri rezervaciji: ', err);
       });
     } else {
-      console.error('Morate popuniti sve podatke!');
+      this.presentIncompleteSelectionAlert();
     }
   }
 
@@ -135,6 +135,16 @@ async presentAlert() {
 
   isReserved(time: TimeModel): boolean {
     return this.reservedTimes.includes(time.timeSlot);
+  }
+
+  async presentIncompleteSelectionAlert() {
+    const alert = await this.alertController.create({
+      header: 'Greška pri rezervaciji',
+      message: 'Morate izabrati teren, datum i vreme pre nego što izvršite rezervaciju.',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
   }
 
 }
